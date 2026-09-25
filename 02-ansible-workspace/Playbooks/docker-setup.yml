@@ -1,0 +1,38 @@
+- name: Clean up and install docker then add user to docker group
+  hosts: app
+  become: true
+  tasks:
+    - name: Ensure conflicting or broken standard packages are removed
+      ansible.builtin.apt:
+        name:
+          - docker
+          - docker-engine
+          - docker.io
+          - containerd
+          - runc
+          - containerd.io
+        state: absent
+        purge: true
+
+    - name: Clean up dangling broken binary paths if any remain
+      ansible.builtin.file:
+        path: /usr/local/bin/docker
+        state: absent
+
+    - name: Update apt repository cache and install clean Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+        update_cache: true
+
+    - name: Ensure Docker service is started and enabled
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add remote login user to docker group
+      ansible.builtin.user:
+        name: "{{ ansible_env.USER | default(ansible_user) }}"
+        groups: docker
+        append: true
