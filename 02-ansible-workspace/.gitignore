@@ -1,0 +1,39 @@
+# ====================================================================
+# Ansible Secrets & Passwords (CRITICAL)
+# ====================================================================
+# Local vault password file (never commit this!)
+.ansible_vault_pass
+vault-password.txt
+.vault_pass
+
+# Private SSH Keys (if you accidentally copy them into this project)
+*.pem
+*.key
+id_rsa
+my_ssh
+
+# ====================================================================
+# Ansible Runtime Junk & Retries
+# ====================================================================
+# Retry files generated when a playbook fails
+*.retry
+
+# Ansible collections and roles installed locally from Galaxy
+collections/
+roles/galaxy_roles/
+
+# ====================================================================
+# System & Editor Garbage
+# ====================================================================
+# Linux/macOS hidden files
+.DS_Store
+.thumbs
+.env
+
+# Python caching (Ansible runs on Python)
+**/__pycache__/
+*.pyc
+
+# Editor configurations
+.vscode/
+.idea/
